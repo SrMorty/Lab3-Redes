@@ -25,6 +25,8 @@ Esta arquitectura simula el funcionamiento básico de un sistema como MQTT, pero
 
 ## Compilación
 
+## TCP
+
 ### En Dev-C++ o Code::Blocks
 
 1. Crea un nuevo proyecto **C (no C++)**.
@@ -137,9 +139,38 @@ Evento (o 'salir'): MEXvsCOL Gol al minuto 32
 
 ---
 
+## UDP
+
+La ejecución del publicador-suscriptor, contrario al de TCP, se realizó en linux. Para ello, se recomienda realizar en Ubuntu usando WSL, o en la terminal de cualquier distribución linux.
+
+En la terminal linux, se necesita descargar el gcc, descarga los siguientes comandos:
+
+sudo apt update
+sudo apt install build-essential -y
+## Ejecución paso a paso
+
+### 1. Iniciar broker 
+
+En una terminal ejecutar el broker, con el siguiente comando:
+./broker_udp
+Al realizar lo anterior, el cliente ya estará listo para recibir mensajes de publicadores y reenviarlos a los suscriptores.
+
+### 2. Inicia uno o varios Subscribers
+
+En otra consola (pueden ser varias), ingresa el siguiente comando:
+./subscriber_udp
+Al realizar lo anterior, se le pedirá al suscriptor ingresar un tema para el partido que quiera 
+
+### 3. Inicia uno o varios Publishers
+
+En otra consola (pueden ser varias), ingresa el siguiente comando:
+./publisher_udp
+Al realizar lo anterior, se le pedirá al publicador ingresar un tema, y acto siguiente se le pedirá ingresar el o los mensajes que recibirán los suscriptores de dicho tema.
+
+
 ## Finalización
 
-- Para detener el **publisher**, escribe `salir` y presiona Enter.  
+- Para detener el **publisher**, escribe `salir` y presiona Enter en TCP. En UDP, usa Ctrl + C en la consola.  
 - Para detener el **broker** o los **subscribers**, usa Ctrl + C en la consola.
 
 ---
