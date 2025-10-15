@@ -1,164 +1,166 @@
-# Explicación de Librerías Usadas en el laboratorio Publisher–Subscriber
+# Sistema Broker - Publisher - Subscriber (Winsock2 en C)
 
-Este laboratorio implementa un modelo **Publicador–Suscriptor** utilizando los protocolos **TCP y UDP** en **Windows**, haciendo uso de la biblioteca **Winsock2** para la comunicación en red.
+## Descripción general
 
-A continuación se describen las librerías empleadas y su función dentro del programa:
+Este proyecto implementa un sistema de mensajería tipo “publish/subscribe” usando sockets TCP con la librería Winsock2 de Windows.
 
----
+- El **Broker** actúa como servidor central que recibe y distribuye mensajes.  
+- El **Publisher** envía eventos o mensajes (por ejemplo, resultados de partidos).  
+- El **Subscriber** se suscribe a ciertos temas y recibe solo los mensajes que coinciden con ellos.
 
-## 1. #include <stdio.h>
-
-### Descripción:
-La librería **Standard Input Output** provee las funciones básicas para manejar la entrada y salida estándar del programa.
-
-### Funcionalidad:
-Permite imprimir mensajes en consola, leer texto ingresado por el usuario y mostrar información del sistema.
-
-### Principales funciones utilizadas:
-- `printf()`: Muestra mensajes o datos por pantalla.  
-- `fgets()`: Lee una línea de texto desde la entrada estándar (teclado).  
-
-
-
-## 2. #include <stdlib.h>
-
-### Descripción:
-La librería Standard Library contiene funciones generales del lenguaje C para el manejo de memoria, control del programa y conversiones de datos.
-
-### Funcionalidad:
-Permite finalizar el programa en caso de error, gestionar memoria dinámica y convertir cadenas a valores numéricos.
-
-### Principales funciones utilizadas:
-
-- exit(): Termina la ejecución del programa de manera controlada.
-- malloc() / free(): Reservan y liberan memoria dinámica.
-- atoi(): Convierte una cadena de texto en un número entero.
-
-
-## 3. #include <string.h>
-
-### Descripción:
-Esta librería contiene funciones para manipular cadenas de caracteres (strings) en C.
-
-### Funcionalidad:
-Permite copiar, comparar, concatenar o dividir cadenas de texto, lo cual es útil para procesar los mensajes enviados y recibidos entre los clientes y el broker.
-
-### Principales funciones utilizadas:
-- strcpy(): Copia el contenido de una cadena a otra.
-- strcmp(): Compara dos cadenas de texto.
-- strtok(): Divide una cadena en fragmentos (tokens) según un delimitador, como espacios o comas.
-- strlen(): Devuelve la longitud de una cadena de texto.
-
-## 4. #include <winsock2.h>
-
-### Descripción:
-Es la librería de red de Windows, conocida como Windows Sockets 2 (Winsock2).
-Permite crear y manejar conexiones de red utilizando protocolos como TCP y UDP.
-
-### Funcionalidad:
-Proporciona todas las funciones necesarias para enviar y recibir datos, crear sockets, conectar clientes con servidores y controlar el flujo de la comunicación.
-
-### Principales funciones utilizadas:
-- WSAStartup(): Inicializa la librería Winsock antes de crear sockets.
-- socket(): Crea un socket (puerto lógico de comunicación).
-- bind(): Asocia un socket a una dirección IP y un puerto.
-- listen() / accept(): Esperan y aceptan conexiones entrantes (solo en el servidor TCP).
-- connect(): Conecta un cliente con el servidor.
-- send() / recv(): Envía y recibe datos en TCP.
-- sendto() / recvfrom(): Envía y recibe datos en UDP.
-- closesocket(): Cierra un socket cuando ya no se usa.
-- WSACleanup(): Libera los recursos utilizados por Winsock al finalizar el programa.
+Esta arquitectura simula el funcionamiento básico de un sistema como MQTT, pero desarrollada en C con conexiones TCP manuales.
 
 ---
 
-# Instrucciones para Compilar y Ejecutar el Proyecto
+## Requisitos previos
 
-## Requisitos Previos
+1. Sistema operativo **Windows**.  
+2. Compilador compatible con **Winsock2**, como:
+   - MinGW
+   - Dev-C++
+   - Visual Studio
+3. Librería `ws2_32.lib` (ya incluida en Windows, pero debe vincularse al compilar).
 
-1. **Sistema operativo:** Windows 10 o superior.  
-2. **Compilador C:** [MinGW](https://sourceforge.net/projects/mingw/) o [TDM-GCC](https://jmeubank.github.io/tdm-gcc/).  
-   - Asegurarse de agregar la ruta de `gcc.exe` a la variable de entorno **PATH**.  
-3. **Archivos del proyecto:**  
-   Debes tener los seis programas C:
-   - `broker_tcp.c`
-   - `publisher_tcp.c`
-   - `subscriber_tcp.c`
-   - `broker_udp.c`
-   - `publisher_udp.c`
-   - `subscriber_udp.c`
+---
 
+## Estructura del proyecto
+
+```
+📂 BrokerPublisherSubscriber
+│
+├── broker.c        # Servidor central que maneja las conexiones y reenvíos
+├── publisher.c     # Cliente que envía mensajes
+├── subscriber.c    # Cliente que se suscribe a temas y recibe mensajes
+└── README.md       # Instrucciones de uso
+```
+
+---
 
 ## Compilación
 
-Abrir una terminal en la carpeta del proyecto y ejecutar los siguientes comandos (si no estan los .exe en la carpeta src):
+### En Dev-C++ o Code::Blocks
+
+1. Crea un nuevo proyecto **C (no C++)**.
+2. Agrega los tres archivos (`broker.c`, `publisher.c`, `subscriber.c`) al proyecto.
+3. En las opciones del compilador, agrega la librería Winsock:
+   ```
+   -lws2_32
+   ```
+   (O en Dev-C++: **Project → Project Options → Parameters → Add Library → ws2_32**)
+4. Compila cada archivo por separado generando tres ejecutables:
+   - `broker.exe`
+   - `publisher.exe`
+   - `subscriber.exe`
+
+---
+
+### En línea de comandos (usando MinGW)
+
+Abre una terminal en la carpeta del proyecto y ejecuta:
 
 ```bash
-gcc broker_tcp.c -o broker_tcp.exe -lws2_32
-gcc publisher_tcp.c -o publisher_tcp.exe -lws2_32
-gcc subscriber_tcp.c -o subscriber_tcp.exe -lws2_32
-gcc broker_udp.c -o broker_udp.exe -lws2_32
-gcc publisher_udp.c -o publisher_udp.exe -lws2_32
-gcc subscriber_udp.c -o subscriber_udp.exe -lws2_32
+gcc broker.c -o broker.exe -lws2_32
+gcc publisher.c -o publisher.exe -lws2_32
+gcc subscriber.c -o subscriber.exe -lws2_32
 ```
 
-## Ejecución
+Esto generará los tres ejecutables listos para correr.
 
-### Paso 1. Inicia el Broker
+---
 
-Primero se debe ejecutar el servidor broker (ya sea el udp o tcp), ya que los demás clientes se conectan a él.
-```bash
-.\broker_tcp.exe 
+## Ejecución paso a paso
 
-```
-o
-```bash
-.\broker_udp.exe 
+### 1. Inicia el Broker
 
-```
-
-### Paso 2. Iniciar uno o varios Suscriptores
-
-En otras terminales (se necesita una terminal por suscriptor, es decir, si se quieren 3 suscriptores se tienen que abrir 3 terminales y en cada una escribir el codigo de abajo), ejecutar el suscriptor:
+Ejecuta el servidor primero (solo una instancia):
 
 ```bash
-cd ruta_donde_este_el_subscriber_tcp.exe
-.\subscriber_tcp.exe 
-
-```
-o
-```bash
-cd ruta_donde_este_el_subscriber_udp.exe
-.\subscriber_udp.exe 
-
+broker.exe
 ```
 
-Al iniciar, debes escribir un comando para suscribirte a uno o varios partidos(deben estar separados por espacio):
-
-```bash
-EQUIPO1vsEQUIPO2 EQUIPO2vsEQUIPO3
+Salida esperada:
+```
+Broker activo en puerto 6000
 ```
 
-El suscriptor quedará a la espera de mensajes relacionados con esos temas.
+Esto indica que el servidor está escuchando nuevas conexiones.
 
+---
 
-### Paso 3. Inicia uno o varios Publicadores
+### 2. Inicia uno o varios Subscribers
 
-En otras terminales (se necesita una terminal por publicador, es decir, si se quieren 3 publicadores se tienen que abrir 3 terminales y en cada una escribir el codigo de abajo), ejecutar el publicador:
+En otra consola (pueden ser varias):
 
 ```bash
-cd ruta_donde_este_el_publisher_tcp.exe
-.\publisher_tcp.exe 
+subscriber.exe
 ```
-o
+
+Ejemplo de entrada:
+```
+Ingrese partidos a suscribirse (ej: MEXvsCOL): MEXvsCOL
+Esperando confirmación...
+Suscripcion exitosa
+Esperando actualizaciones...
+```
+
+Ahora este cliente solo recibirá mensajes que contengan el texto “MEXvsCOL”.
+
+---
+
+### 3. Inicia uno o varios Publishers
+
+En otra consola:
+
 ```bash
-cd ruta_donde_este_el_publisher_udp.exe
-.\publisher_udp.exe 
+publisher.exe
 ```
 
-Enviar un mensaje indicando el tema y el contenido, por ejemplo:
-
-```bash
-EQUIPO1vsEQUIPO2 Gol del delantero!
+Ejemplo:
+```
+Publisher conectado al broker en 127.0.0.1:6000
+Evento (o 'salir'): MEXvsCOL Gol en X minutoo
 ```
 
-El Broker recibirá ese mensaje y lo reenviará solo a los suscriptores que estén registrados al partido EQUIPO1vsEQUIPO2.
+El mensaje se enviará al broker, y este lo reenviará automáticamente a todos los subscribers suscritos al tema “MEXvsCOL”.
+
+---
+
+## Ejemplo de flujo completo
+
+### Consola del Broker:
+```
+Broker activo en puerto 6000
+Conectado 127.0.0.1
+Conectado 127.0.0.1
+```
+
+### Consola del Subscriber:
+```
+Ingrese partidos a suscribirse (ej: MEXvsCOL): MEXvsCOL
+Suscripcion exitosa
+Esperando actualizaciones...
+MEXvsCOL gol en el minuto 40
+```
+
+### Consola del Publisher:
+```
+Publisher conectado al broker en 127.0.0.1:6000
+Evento (o 'salir'): MEXvsCOL Gol al minuto 32
+```
+
+---
+
+## Finalización
+
+- Para detener el **publisher**, escribe `salir` y presiona Enter.  
+- Para detener el **broker** o los **subscribers**, usa Ctrl + C en la consola.
+
+---
+
+## Notas técnicas
+
+- `WSAStartup()` y `WSACleanup()` son obligatorios al usar Winsock.  
+- `socket()`, `bind()`, `listen()` y `accept()` conforman la parte del servidor (Broker).  
+- `connect()` y `send()` se usan en los clientes (Publisher y Subscriber).  
+- El broker usa `select()` para manejar múltiples conexiones simultáneamente.  
+- Los mensajes se filtran comparando el texto con los temas de suscripción.
