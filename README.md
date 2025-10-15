@@ -23,19 +23,6 @@ Esta arquitectura simula el funcionamiento básico de un sistema como MQTT, pero
 
 ---
 
-## Estructura del proyecto
-
-```
-📂 BrokerPublisherSubscriber
-│
-├── broker.c        # Servidor central que maneja las conexiones y reenvíos
-├── publisher.c     # Cliente que envía mensajes
-├── subscriber.c    # Cliente que se suscribe a temas y recibe mensajes
-└── README.md       # Instrucciones de uso
-```
-
----
-
 ## Compilación
 
 ### En Dev-C++ o Code::Blocks
