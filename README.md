@@ -57,6 +57,68 @@ Esto generará los tres ejecutables listos para correr.
 
 ---
 
+### Documentación: Winsock (sockets TCP)
+
+Esta subsección explica los conceptos y llamadas de la API de Winsock necesarios para implementar el sistema Broker - Publisher - Subscriber usando TCP en Windows. 
+
+1) Inicialización y limpieza
+
+- WSAStartup(): Antes de usar cualquier función de Winsock debe llamarse `WSAStartup(MAKEWORD(2,2), &wsaData)` para inicializar la biblioteca. Pide la versión 2.2 habitualmente.
+- WSACleanup(): Al terminar la aplicación (o cuando ya no se usarán sockets), llamar a `WSACleanup()` para liberar recursos.
+
+Ejemplo mínimo:
+
+```
+WSADATA wsaData;
+if (WSAStartup(MAKEWORD(2,2), &wsaData) != 0) {
+      // manejo de error
+}
+// ... usar sockets ...
+WSACleanup();
+```
+
+2) Tipos y funciones clave
+
+- SOCKET: tipo usado por Winsock para describir un descriptor de socket (no es un int). Valor inválido: `INVALID_SOCKET`.
+- closesocket(SOCKET): cerrar un socket en Winsock (no usar close()).
+- WSAGetLastError(): obtener el código de error específico de Winsock.
+- htonl/htons / ntohl/ntohs: conversiones entre orden de bytes de red/host (idénticas a POSIX).
+
+Principales llamadas para el Broker (servidor TCP):
+- socket(): crear socket (AF_INET, SOCK_STREAM, IPPROTO_TCP).
+- bind(): asociar dirección y puerto.
+- listen(): poner socket en modo escucha.
+- accept(): aceptar nuevas conexiones entrantes (devuelve un `SOCKET` por cliente).
+- select() (o hilos): para multiplexar múltiples conexiones y leer/escribir sin bloquear.
+
+Principales llamadas para Publisher/Subscriber (clientes TCP):
+- socket()
+- connect(): establecer conexión con el broker.
+- send()/recv(): enviar y recibir datos (o sendall/recv en bucle para mensajes más largos).
+
+3) Flujo típico (Broker)
+
+1. Llamar a `WSAStartup()`.
+2. `socket()` para crear el socket servidor.
+3. `bind()` a la dirección (por ejemplo, INADDR_ANY) y puerto (ej. 6000).
+4. `listen()` para empezar a aceptar conexiones.
+5. Bucle principal: usar `select()` o `WSAPoll()` para detectar nuevas conexiones y datos.
+    - Si `select()` indica actividad en el socket escucha -> `accept()` -> añadir nuevo `SOCKET` a la lista de monitoreo.
+    - Si actividad en un socket cliente -> `recv()` leer datos y reenviarlos a los subscribers correspondientes usando `send()`.
+6. Cuando termine, `closesocket()` para cada socket y `WSACleanup()`.
+
+4) Flujo típico (Publisher / Subscriber)
+
+1. `WSAStartup()`.
+2. `socket()`.
+3. `connect()` al broker (IP y puerto).
+4. `send()` para publicar mensajes (publisher) o `send()` para suscribirse/informar interés (subscriber), según el protocolo de la app.
+5. `recv()` para recibir mensajes reenviados por el broker (el subscriber normalmente queda en bucle esperando mensajes).
+6. `closesocket()` y `WSACleanup()` al terminar.
+
+
+---
+
 ## Ejecución paso a paso
 
 ### 1. Inicia el Broker
@@ -64,7 +126,7 @@ Esto generará los tres ejecutables listos para correr.
 Ejecuta el servidor primero (solo una instancia):
 
 ```bash
-broker.exe
+broker_tcp.exe
 ```
 
 Salida esperada:
@@ -81,7 +143,7 @@ Esto indica que el servidor está escuchando nuevas conexiones.
 En otra consola (pueden ser varias):
 
 ```bash
-subscriber.exe
+subscriber_tcp.exe
 ```
 
 Ejemplo de entrada:
@@ -101,7 +163,7 @@ Ahora este cliente solo recibirá mensajes que contengan el texto “MEXvsCOL”
 En otra consola:
 
 ```bash
-publisher.exe
+publisher_tcp.exe
 ```
 
 Ejemplo:
