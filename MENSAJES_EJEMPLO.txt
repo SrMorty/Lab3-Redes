@@ -1,0 +1,134 @@
+⚽ MENSAJES DE EJEMPLO PARA PUBLISHER QUIC
+Copie y pegue estos mensajes en la terminal del publisher
+Formato: PARTIDO:Evento (ejemplo: Colombia vs Argentina:Gol al minuto 10)
+
+========================================
+PARTIDO: Colombia vs Argentina
+========================================
+Colombia vs Argentina:Gol de Colombia al minuto 10
+Colombia vs Argentina:Tarjeta amarilla para Díaz
+Colombia vs Argentina:Fin del primer tiempo
+Colombia vs Argentina:Gol de Colombia
+Colombia vs Argentina:Tarjeta roja para Messi
+Colombia vs Argentina:Corner a favor de Colombia
+Colombia vs Argentina:Cambio: Sale James, entra Quintero
+Colombia vs Argentina:Penalti a favor de Colombia
+Colombia vs Argentina:Gol de James Rodriguez desde el punto penal
+Colombia vs Argentina:Final del partido - Victoria Colombia 3-1
+
+========================================
+PARTIDO: Brasil vs Uruguay
+========================================
+Brasil vs Uruguay:Gol de Brasil al minuto 5
+Brasil vs Uruguay:Tarjeta amarilla para Cavani
+Brasil vs Uruguay:Corner a favor de Brasil
+Brasil vs Uruguay:Gol de Neymar - Brasil 2-0
+Brasil vs Uruguay:Lesion de Vinicius Jr
+Brasil vs Uruguay:Cambio: Sale Vinicius, entra Rodrygo
+Brasil vs Uruguay:Tarjeta amarilla para Casemiro
+Brasil vs Uruguay:Gol de Uruguay - Brasil 2-1
+Brasil vs Uruguay:Final del primer tiempo
+Brasil vs Uruguay:Final del partido - Victoria Brasil 2-1
+
+========================================
+PARTIDO: Argentina vs Chile
+========================================
+Argentina vs Chile:Inicio del partido
+Argentina vs Chile:Gol de Messi al minuto 15
+Argentina vs Chile:Tarjeta amarilla para Vidal
+Argentina vs Chile:Corner a favor de Argentina
+Argentina vs Chile:Gol de Lautaro Martinez - Argentina 2-0
+Argentina vs Chile:Lesion de Alexis Sanchez
+Argentina vs Chile:Cambio en Chile
+Argentina vs Chile:Tarjeta roja para Medel
+Argentina vs Chile:Final del partido - Argentina 2-0
+
+========================================
+PARTIDO: Peru vs Ecuador
+========================================
+Peru vs Ecuador:Gol de Peru al minuto 8
+Peru vs Ecuador:Tarjeta amarilla para Gonzalez
+Peru vs Ecuador:Corner a favor de Peru
+Peru vs Ecuador:Gol de Guerrero - Peru 2-0
+Peru vs Ecuador:Cambio en Ecuador
+Peru vs Ecuador:Gol de Ecuador - Peru 2-1
+Peru vs Ecuador:Final del primer tiempo
+Peru vs Ecuador:Final del partido - Peru 2-1
+
+========================================
+PARTIDO: Venezuela vs Bolivia
+========================================
+Venezuela vs Bolivia:Inicio del partido
+Venezuela vs Bolivia:Gol de Venezuela al minuto 12
+Venezuela vs Bolivia:Tarjeta amarilla para Moreno
+Venezuela vs Bolivia:Corner a favor de Venezuela
+Venezuela vs Bolivia:Gol de Rondon - Venezuela 2-0
+Venezuela vs Bolivia:Final del partido - Venezuela 2-0
+
+========================================
+PARTIDO: Paraguay vs Chile
+========================================
+Paraguay vs Chile:Gol de Paraguay al minuto 20
+Paraguay vs Chile:Tarjeta amarilla para Vidal
+Paraguay vs Chile:Corner a favor de Paraguay
+Paraguay vs Chile:Gol de Almiron - Paraguay 2-0
+Paraguay vs Chile:Final del partido
+
+========================================
+MENSAJES RÁPIDOS PARA PRUEBAS
+========================================
+Colombia vs Argentina:GOL!
+Brasil vs Uruguay:GOL!
+Argentina vs Chile:GOL!
+Peru vs Ecuador:GOL!
+Colombia vs Argentina:Mensaje rapido 1
+Colombia vs Argentina:Mensaje rapido 2
+Colombia vs Argentina:Mensaje rapido 3
+Brasil vs Uruguay:Prueba A
+Brasil vs Uruguay:Prueba B
+Brasil vs Uruguay:Prueba C
+
+========================================
+MENSAJES PARA PROBAR SECUENCIAS
+========================================
+Colombia vs Argentina:Secuencia 1 - Inicio del partido
+Colombia vs Argentina:Secuencia 2 - Primer ataque
+Colombia vs Argentina:Secuencia 3 - Oportunidad de gol
+Colombia vs Argentina:Secuencia 4 - GOOOOL!
+Colombia vs Argentina:Secuencia 5 - Celebracion
+Colombia vs Argentina:Secuencia 6 - Reinicio del juego
+Colombia vs Argentina:Secuencia 7 - Segundo tiempo
+Colombia vs Argentina:Secuencia 8 - Final del partido
+
+========================================
+MENSAJES LARGOS (Prueba de capacidad)
+========================================
+Colombia vs Argentina:James Rodriguez recibe el balon en el mediocampo, avanza esquivando rivales, llega al area y dispara con la zurda... GOLAZO INOLVIDABLE que pone a Colombia adelante en el marcador!
+Brasil vs Uruguay:Neymar hace una jugada individual espectacular desde su propio campo, dribla a 5 defensores, llega al area rival y define con clase al angulo superior derecho dejando sin opciones al arquero uruguayo!
+Argentina vs Chile:Lionel Messi recibe un pase filtrado de Di Maria, controla el balon con el pecho, deja a dos defensores en el camino y define con precision ante el arquero rival para marcar su gol numero 100 con la seleccion!
+
+========================================
+MÚLTIPLES PARTIDOS SIMULTÁNEOS
+========================================
+Colombia vs Argentina:Colombia ataca por la derecha
+Brasil vs Uruguay:Brasil responde con un contraataque
+Argentina vs Chile:Argentina presiona en el mediocampo
+Peru vs Ecuador:Peru marca el 1-0!
+Colombia vs Argentina:Colombia marca el 1-0 tambien!
+Brasil vs Uruguay:Brasil empata 1-1 de inmediato!
+Argentina vs Chile:Argentina marca el 2-1!
+Venezuela vs Bolivia:Venezuela abre el marcador!
+Colombia vs Argentina:Colombia busca el segundo
+Brasil vs Uruguay:Brasil defiende con orden
+Argentina vs Chile:Argentina sale campeon!
+
+========================================
+FIN - COPIE LOS MENSAJES QUE NECESITE
+========================================
+
+INSTRUCCIONES:
+1. Abra una terminal y ejecute: publisher_quic.exe
+2. Copie cualquier línea de este archivo
+3. Péguelas en la terminal del publisher
+4. Presione Enter después de cada mensaje
+5. El subscriber que esté suscrito al partido correspondiente recibirá el mensaje
